@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require_relative 'face_reader'
+
+image_path = ARGV.first
+fr = FaceReader.new
+image_data = File.read image_path
+puts "Checking if #{image_path} is happy"
+happy = fr.is_happy? image_data
+if happy.nil?
+  puts "IDK, could not figure out if they were happy"
+  exit 2
+elsif happy
+  puts "Yes, they are happy"
+  exit 0
+else
+  puts "No, they are not happy"
+  exit 1
+end
