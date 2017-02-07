@@ -1,0 +1,6 @@
+be bin/check_happy ~/Downloads/test_image.jpg
+->
+Checking if /home/user/Downloads/test_image.jpg is happy
+how happy: [40.83291244506836]
+NO, they are not happy
+# exit 0

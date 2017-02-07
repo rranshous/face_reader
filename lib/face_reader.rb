@@ -1,8 +1,17 @@
 require 'aws-sdk'
+require 'ostruct'
 
 class FaceReader
+
   def is_happy? image_data
-    face_details(image_data)[:is_happy?]
+    face_details(image_data).is_happy?
+  end
+
+  def to_h image_data
+    client.detect_faces({
+      image: { bytes: image_data },
+      attributes: ["ALL"]
+    }).to_h
   end
 
   private
@@ -19,7 +28,7 @@ class FaceReader
     end
     puts "how happy: #{how_happy}"
     happiness = how_happy.first ? how_happy.first > 80 : nil
-    { is_happy?: happiness }
+    OpenStruct.new({ is_happy?: happiness })
   end
 
   def client

@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/face_reader'
+require 'json'
+
+jpgs = Dir.glob('*.jpg')
+pngs = Dir.glob('*.png')
+all = jpgs + pngs
+
+puts "Found #{jpgs.length} jpgs"
+puts "Found #{pngs.length} pngs"
+
+fr = FaceReader.new
+
+all.each_with_index do |image_path, i|
+  out_path = "#{image_path}.face_details.json"
+  puts "[#{i}/#{all.length}] detailing #{image_path}"
+  if File.exists? out_path
+    puts "[#{i}/#{all.length}] face details exist, skipping"
+    next
+  end
+  image_data = File.read image_path
+  begin
+    details = fr.to_h(image_data)
+    File.write out_path, details.to_json
+  rescue Aws::Rekognition::Errors::InvalidImageFormatException
+    puts "[#{i}/#{all.length}] fail, bad image format"
+    next
+  end
+end
+
+puts "DONE"
+

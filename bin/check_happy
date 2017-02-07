@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative 'face_reader'
+require_relative '../lib/face_reader'
 
 image_path = ARGV.first
 fr = FaceReader.new
@@ -11,9 +11,9 @@ if happy.nil?
   puts "IDK, could not figure out if they were happy"
   exit 2
 elsif happy
-  puts "Yes, they are happy"
+  puts "YES, they are happy"
   exit 0
 else
-  puts "No, they are not happy"
+  puts "NO, they are not happy"
   exit 1
 end
